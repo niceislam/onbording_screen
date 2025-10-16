@@ -1,10 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:new_eapp/new_eapp/controller/product_controller/product_controller.dart';
 import 'package:new_eapp/new_eapp/model/Product_model.dart';
-
-import '../../controller/api_controller/api.dart';
 import '../../widget_all/Product_widget/Product_item.dart';
 import '../../widget_all/textfield_widget/txtfield.dart';
 
@@ -16,14 +13,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
   List<ProductModel> finalData = [];
-
+  List<ProductModel> searchData = [];
+  bool isLoading = true;
   getData() async {
+    isLoading = true;
     log("===============11111");
-    var data = await ProductCon().makeModel();
-    finalData = data;
+    searchData = await ProductCon().makeModel();
+    finalData = searchData;
+    isLoading = false;
     log("===============33333");
     setState(() {});
+  }
+
+  searchFun({required String searchStr}) async {
+    finalData = searchData
+        .where((v) => v.name!.toLowerCase().contains(searchStr.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -32,15 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  double appbarwidth = 100;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.sizeOf(context).width, appbarwidth),
+        preferredSize: Size(MediaQuery.sizeOf(context).width, 100),
         child: Container(
-          height: appbarwidth,
+          height: 100,
           decoration: BoxDecoration(
             color: Colors.pink,
             borderRadius: const BorderRadius.only(
@@ -104,9 +110,24 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextfield(
+              onchanged: (value) {
+                if (value == "") {
+                  finalData = searchData;
+                }
+                setState(() {});
+              },
+              controller: searchController,
               hinttext: "Search here...",
               preIcon: Icon(Icons.search, color: Colors.grey),
               sufIcon: InkWell(
+                onTap: () async {
+                  if (searchController != "") {
+                    searchFun(searchStr: searchController.text);
+                  } else {
+                    finalData = searchData;
+                  }
+                  setState(() {});
+                },
                 child: Container(
                   width: 100,
                   decoration: BoxDecoration(
@@ -114,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(30),
                       bottomRight: Radius.circular(30),
-                      topLeft: Radius.circular(40),
+                      topLeft: Radius.circular(30),
                     ),
                   ),
                   child: Center(
@@ -142,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Text(
-                  '"fruits"',
+                  '"${searchController.text}"',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -153,28 +174,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 10),
             Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.64,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: finalData.length,
-                itemBuilder: (context, index) {
-                  final item = finalData[index];
-                  return CustomItemContainer(
-                    image: item.image,
-                    title: item.name,
-                    quantity: item.quantity,
-                    dailyprice: item.regularPrice,
-                    disPrice: item.discountPrice,
-                    ratings: item.rating,
-                    review: item.reviews,
-                  );
-                },
-              ),
+              child: isLoading == true
+                  ? Center(child: CircularProgressIndicator(color: Colors.pink))
+                  : finalData.length == 0
+                  ? Center(child: Text("Not Found"))
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.64,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: finalData.length,
+                      itemBuilder: (context, index) {
+                        final item = finalData[index];
+                        return CustomItemContainer(
+                          image: item.image,
+                          title: item.name,
+                          quantity: item.quantity,
+                          dailyprice: item.regularPrice,
+                          disPrice: item.discountPrice,
+                          ratings: item.rating,
+                          review: item.reviews,
+                        );
+                      },
+                    ),
             ),
           ],
         ),
