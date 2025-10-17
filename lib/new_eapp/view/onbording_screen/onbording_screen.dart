@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 
 class OnbordingScreen extends StatefulWidget {
   const OnbordingScreen({super.key});
@@ -12,95 +13,105 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      pages: [
-        PageViewModel(
-          decoration: PageDecoration(
-            titleTextStyle: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-            bodyTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            safeArea: 1,
-            imageAlignment: Alignment.bottomCenter,
-          ),
-          image: Image.network("https://static.vecteezy.com/system/browse_category/image/195/small_Arrow_cb1.png"),
-          title: "Track you work\n and get the result",
-          body: "Remember to keep track of your professional accomplishments",
+      // on dots decorator
+      dotsDecorator: DotsDecorator(
+        color: Colors.grey,
+        activeColor: Colors.pink,
+        activeSize: Size(30, 10),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
-        PageViewModel(
-          decoration: PageDecoration(
-            titleTextStyle: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-            bodyTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            safeArea: 1,
-            imageAlignment: Alignment.bottomCenter,
-          ),
-          image: Image.network("https://static.vecteezy.com/system/browse_category/image/195/small_Arrow_cb1.png"),
-          title: "Stay Organized\n With Team",
-          body:
-              "But understanding the contributions our colleogues make to our teams and companies.",
-        ),
-        PageViewModel(
-          decoration: PageDecoration(
-            titleTextStyle: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-            bodyTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            safeArea: 1,
-            imageAlignment: Alignment.bottomCenter,
-          ),
-          image: Image.network("https://static.vecteezy.com/system/browse_category/image/195/small_Arrow_cb1.png"),
-          title: "Get notified when\n work happens",
-          body:
-              "Toke control of notifications,\ncollaborate live or on your own time",
-        ),
-      ],
+        spacing: EdgeInsets.symmetric(horizontal: 3),
+      ),
       showSkipButton: true,
       skip: Text(
         "SKIP",
         style: TextStyle(
-          color: Colors.blue,
-          fontSize: 16,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
+          fontSize: 15,
         ),
       ),
-
-      done: Card(
-        color: Colors.blue,
-        child: SizedBox(
-          height: 42,
-          width: 80,
-          child: Center(
-            child: Text(
-              "START",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ),
-      onDone: () {},
       showNextButton: true,
       next: CircleAvatar(
         radius: 25,
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.arrow_forward, size: 28, color: Colors.white),
-      ),
-      dotsDecorator: DotsDecorator(
-        spacing: EdgeInsets.symmetric(horizontal: 3),
-        activeColor: Colors.blue,
-        color: Colors.grey,
-        activeSize: Size(25, 9),
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+        backgroundColor: Colors.pink,
+        child: Center(
+          child: Icon(Icons.arrow_forward, color: Colors.white, size: 28),
         ),
       ),
+      onDone: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (c) => HomeScreen()),
+        );
+      },
+      done: CircleAvatar(
+        radius: 25,
+        backgroundColor: Colors.pink,
+        child: Center(child: Icon(Icons.check, color: Colors.white, size: 28)),
+      ),
+      showDoneButton: true,
+
+      // onbording page
+      pages: [
+        PageViewModel(
+          decoration: PageDecoration(
+            bodyAlignment: Alignment.center,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          title: "Healthy Recipes",
+          body:
+              "Discover the freshest, locally sourced vegetables delivered straight to your door. Eat better, live healthier, and enjoy the taste of quality.",
+          image: Image.asset(
+            height: 250,
+            width: 250,
+            "assets/image/vagitableonbrd.webp",
+          ),
+        ),
+        PageViewModel(
+          decoration: PageDecoration(
+            bodyAlignment: Alignment.center,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          title: "Your Connected World",
+          body:
+              "Effortlessly manage and control all your smart devices from one simple hub. Monitor status, automate routines, and secure your home with intuitive precision.",
+          image: Image.asset(
+            height: 250,
+            width: 250,
+            fit: BoxFit.fill,
+            "assets/image/headPhn.webp",
+          ),
+        ),
+        PageViewModel(
+          decoration: PageDecoration(
+            bodyAlignment: Alignment.center,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          title: "Design Your Space",
+          body:
+              "Visualize new furniture and decor in your actual room using augmented reality. Instantly try styles, colors, and layouts before you commit to buying.",
+          image: Image.asset(
+            height: 250,
+            width: 250,
+            fit: BoxFit.fill,
+            "assets/image/homeDecor.webp",
+          ),
+        ),
+      ],
     );
   }
 }
