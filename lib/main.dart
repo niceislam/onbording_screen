@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'new_eapp/view/onbording_screen/onbording_screen.dart';
 import 'new_eapp/view/splash_screen/splash_screen.dart';
 
 void main() {

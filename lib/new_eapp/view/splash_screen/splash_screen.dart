@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 import 'package:new_eapp/new_eapp/view/onbording_screen/onbording_screen.dart';
@@ -12,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   navigatepage() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     var a = await LocalStorage().readData(key: "onbording");
     if (a == "yes") {
       Navigator.pushReplacement(
@@ -42,7 +43,11 @@ class _SplashScreenState extends State<SplashScreen> {
         maxWidth: MediaQuery.sizeOf(context).width,
       ),
       child: Center(
-        child: Image.asset(height: 250, width: 250, "assets/image/splash.jpg"),
+        child: Lottie.asset(
+          height: 500,
+          width: 500,
+          "assets/lottie/delivary.json",
+        ),
       ),
     );
   }

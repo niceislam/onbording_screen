@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
@@ -16,6 +14,7 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
+      globalBackgroundColor: Colors.white,
       // on dots decorator
       dotsDecorator: DotsDecorator(
         color: Colors.grey,
