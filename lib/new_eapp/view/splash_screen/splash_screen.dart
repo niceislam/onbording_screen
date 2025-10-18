@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 import 'package:new_eapp/new_eapp/view/onbording_screen/onbording_screen.dart';
 
@@ -12,10 +13,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   navigatepage() async {
     await Future.delayed(Duration(seconds: 3));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (c) => OnbordingScreen()),
-    );
+    var a = await LocalStorage().readData(key: "onbording");
+    if (a == "yes") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (c) => HomeScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (c) => OnbordingScreen()),
+      );
+    }
   }
 
   @override

@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:new_eapp/new_eapp/controller/product_controller/product_controller.dart';
+import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/model/Product_model.dart';
+import 'package:new_eapp/new_eapp/view/splash_screen/splash_screen.dart';
 import '../../widget_all/Product_widget/Product_item.dart';
 import '../../widget_all/textfield_widget/txtfield.dart';
 
@@ -66,6 +68,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white.withOpacity(0.4),
                   child: Center(
                     child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (c) => AlertDialog(
+                            title: Text("Confirmation"),
+                            content: Text(
+                              "Are you sure to log out ?",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () async {
+                                  await LocalStorage().deleteAllData();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (c) => SplashScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text("yes"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("no"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       child: Icon(Icons.arrow_back_ios, color: Colors.white),
                     ),
                   ),

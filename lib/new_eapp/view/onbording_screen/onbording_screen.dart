@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 
 class OnbordingScreen extends StatefulWidget {
@@ -40,7 +43,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
           child: Icon(Icons.arrow_forward, color: Colors.white, size: 28),
         ),
       ),
-      onDone: () {
+      onDone: () async {
+        await LocalStorage().writeData(key: "onbording", value: "yes");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (c) => HomeScreen()),
