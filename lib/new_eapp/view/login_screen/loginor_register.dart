@@ -22,7 +22,7 @@ class _LoginorRegisterState extends State<LoginorRegister> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset("assets/image/loginpic.webp"),
+            Image.asset("assets/image/loginpic.jpg"),
             Column(
               spacing: 15,
               children: [
