@@ -13,52 +13,58 @@ class _LoginorRegisterState extends State<LoginorRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        color: Colors.white,
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.sizeOf(context).width,
-          maxHeight: MediaQuery.sizeOf(context).height,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset("assets/image/splash.jpg"),
-            Column(
-              spacing: 15,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (c) => LoginPage()),
-                    );
-                  },
-                  child: _buildContainer(
-                    title: 'Login',
-                    containerColor: Colors.black,
-                    fontcolor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width,
+            maxHeight: MediaQuery.sizeOf(context).height,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                height: 400,
+                width: 400,
+                "assets/image/loginorpic.png",
+              ),
+              Column(
+                spacing: 15,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (c) => LoginPage()),
+                      );
+                    },
+                    child: _buildContainer(
+                      title: 'Login',
+                      containerColor: Colors.black,
+                      fontcolor: Colors.white,
+                    ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: _buildContainer(
-                    title: "Register",
-                    containerColor: Colors.transparent,
-                    fontcolor: Colors.black,
-                    border: BoxBorder.all(color: Colors.black),
+                  InkWell(
+                    onTap: () {},
+                    child: _buildContainer(
+                      title: "Register",
+                      containerColor: Colors.transparent,
+                      fontcolor: Colors.black,
+                      border: BoxBorder.all(color: Colors.black),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Continue as a guest",
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Continue as a guest",
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
