@@ -38,7 +38,7 @@ class CustomTextfield extends StatelessWidget {
         hintText: "$hinttext",
         hintStyle: TextStyle(
           color: Colors.grey,
-          fontSize: 18,
+          fontSize: 17,
           fontWeight: FontWeight.w500,
         ),
         prefixIcon: preIcon,

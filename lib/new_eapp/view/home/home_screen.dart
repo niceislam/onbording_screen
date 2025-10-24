@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             actions: [
                               ElevatedButton(
                                 onPressed: () async {
-                                  await LocalStorage().deleteAllData();
+                                  await LocalStorage().deletData(key: "login");
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

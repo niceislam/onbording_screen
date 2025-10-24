@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/login_page.dart';
+import 'package:new_eapp/new_eapp/view/login_screen/register_screen.dart';
 
 class LoginorRegister extends StatefulWidget {
   const LoginorRegister({super.key});
@@ -13,7 +14,7 @@ class _LoginorRegisterState extends State<LoginorRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
           constraints: BoxConstraints(
@@ -40,17 +41,22 @@ class _LoginorRegisterState extends State<LoginorRegister> {
                     },
                     child: _buildContainer(
                       title: 'Login',
-                      containerColor: Colors.black,
+                      containerColor: Colors.pink,
                       fontcolor: Colors.white,
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (c) => RegisterScreen()),
+                      );
+                    },
                     child: _buildContainer(
                       title: "Register",
                       containerColor: Colors.transparent,
-                      fontcolor: Colors.black,
-                      border: BoxBorder.all(color: Colors.black),
+                      fontcolor: Colors.pink,
+                      border: BoxBorder.all(color: Colors.pink),
                     ),
                   ),
                   SizedBox(height: 10),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
+import 'package:new_eapp/new_eapp/view/login_screen/loginor_register.dart';
 
 class OnbordingScreen extends StatefulWidget {
   const OnbordingScreen({super.key});
@@ -44,10 +46,12 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
       ),
       onDone: () async {
         await LocalStorage().writeData(key: "onbording", value: "yes");
+        EasyLoading.show();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (c) => HomeScreen()),
+          MaterialPageRoute(builder: (c) => LoginorRegister()),
         );
+        EasyLoading.dismiss();
       },
       done: CircleAvatar(
         radius: 25,

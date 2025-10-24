@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
+import 'package:new_eapp/new_eapp/view/login_screen/loginor_register.dart';
 import 'package:new_eapp/new_eapp/view/onbording_screen/onbording_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,12 +16,18 @@ class _SplashScreenState extends State<SplashScreen> {
   navigatepage() async {
     await Future.delayed(Duration(seconds: 5));
     var a = await LocalStorage().readData(key: "onbording");
-    if (a == "yes") {
+    var b = await LocalStorage().readData(key: "login");
+    if (a == "yes" && b == "yes") {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (c) => HomeScreen()),
       );
-    } else {
+    } else if (a == "yes") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (c) => LoginorRegister()),
+      );
+    }else{
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (c) => OnbordingScreen()),
