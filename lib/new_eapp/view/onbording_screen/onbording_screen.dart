@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
+import 'package:new_eapp/new_eapp/other/permission_controller/permission.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/loginor_register.dart';
 
@@ -13,6 +14,17 @@ class OnbordingScreen extends StatefulWidget {
 }
 
 class _OnbordingScreenState extends State<OnbordingScreen> {
+
+  permissionfun() {
+    PermissionController().notificationpermission();
+  }
+
+  @override
+  void initState() {
+    permissionfun();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(

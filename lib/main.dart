@@ -7,6 +7,8 @@ import 'package:new_eapp/new_eapp/view/login_screen/loginor_register.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/register_screen.dart';
 import 'package:new_eapp/new_eapp/view/splash_screen/splash_screen.dart';
 
+import 'new_eapp/readmore/readmoreText.dart';
+
 void main() {
   Easyloading11().setting();
   runApp(MyApp());
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-      home: SplashScreen(),
+      home: Readmoretext(),
     );
   }
 }
