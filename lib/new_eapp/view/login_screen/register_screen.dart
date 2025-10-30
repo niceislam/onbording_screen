@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:new_eapp/new_eapp/model/login/login_model.dart';
+import 'package:new_eapp/new_eapp/model/login/user_info_login.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/login_page.dart';
 import 'package:typewritertext/typewritertext.dart';
 
@@ -24,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final mykey = GlobalKey<FormState>();
   bool eyeStatus = true;
   bool eyeStatus1 = true;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,13 +153,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 InkWell(
                   onTap: () async {
                     if (mykey.currentState!.validate()) {
-                      await EasyLoading.show();
+                      isLoading = true;
+                      setState(() {});
+                      await Future.delayed(Duration(seconds: 3));
                       Map<String, dynamic> registerData = {
                         "username": usernamecontroller.text,
                         "email": emailcontroller.text,
                         "password": passwordcontroller.text,
                       };
-                      log("=========${registerData}");
+                      UserLoginInfo().LoginInfo.add(registerData);
+
+                      isLoading = false;
+                      setState(() {});
+                      log("============${UserLoginInfo().LoginInfo.length}");
+                      await EasyLoading.showSuccess(
+                        "Registration Successfully",
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (c) => LoginPage()),
+                      );
                     }
                   },
                   child: Container(
@@ -166,14 +183,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.pink,
                     ),
                     child: Center(
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
+                      child: isLoading == true
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              "Register",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
                     ),
                   ),
                 ),

@@ -139,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (mykey.currentState!.validate()) {
                       isLoading = true;
                       setState(() {});
+                      await Future.delayed(Duration(seconds: 3));
                       for (var i in fromjsonData) {
                         if (emailcontroller.text == i.email &&
                             passwordcontroller.text == i.password) {
