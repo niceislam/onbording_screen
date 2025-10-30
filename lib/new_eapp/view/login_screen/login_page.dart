@@ -1,5 +1,8 @@
 import 'dart:developer';
 import 'package:new_eapp/new_eapp/local_storage/local_storage.dart';
+import 'package:new_eapp/new_eapp/model/login/Model_service.dart';
+import 'package:new_eapp/new_eapp/model/login/login_model.dart';
+import 'package:new_eapp/new_eapp/model/login/user_info_login.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/register_screen.dart';
 import 'package:typewritertext/typewritertext.dart';
@@ -19,8 +22,23 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool eyeStatus = true;
-  bool logincircle = false;
   final mykey = GlobalKey<FormState>();
+  bool isLoading = false;
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+
+  List<LoginModel> fromjsonData = [];
+  getData() async {
+    fromjsonData = await LoginService.LoginData();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 CustomTextfield(
+                  controller: emailcontroller,
                   hinttext: "Enter your email",
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -74,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 15),
                 CustomTextfield(
+                  controller: passwordcontroller,
                   obsecureTxt: eyeStatus,
                   hinttext: "Enter your password",
                   sufIcon: InkWell(
@@ -117,17 +137,27 @@ class _LoginPageState extends State<LoginPage> {
                 InkWell(
                   onTap: () async {
                     if (mykey.currentState!.validate()) {
-                      await EasyLoading.show();
-                      await Future.delayed(Duration(seconds: 2));
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (c) => HomeScreen()),
-                      );
-                      await LocalStorage().writeData(
-                        key: "login",
-                        value: "yes",
-                      );
-                      await EasyLoading.showSuccess("Welcome");
+                      isLoading = true;
+                      setState(() {});
+                      for (var i in fromjsonData) {
+                        if (emailcontroller.text == i.email &&
+                            passwordcontroller.text == i.password) {
+                          await EasyLoading.showSuccess("Login successfully");
+                          await LocalStorage().writeData(
+                            key: "login",
+                            value: "yes",
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (c) => HomeScreen()),
+                          );
+                          break;
+                        } else {
+                          await EasyLoading.showError("Wrong user");
+                        }
+                        isLoading = false;
+                        setState(() {});
+                      }
                     }
                   },
                   child: Container(
@@ -138,14 +168,16 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.pink,
                     ),
                     child: Center(
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
+                      child: isLoading == true
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
                     ),
                   ),
                 ),

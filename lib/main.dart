@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:new_eapp/new_eapp/easyloading/easyloading.dart';
 import 'package:new_eapp/new_eapp/view/home/home_screen.dart';
+import 'package:new_eapp/new_eapp/view/login_screen/login_page.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/loginor_register.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/register_screen.dart';
 import 'package:new_eapp/new_eapp/view/splash_screen/splash_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-      home: Readmoretext(),
+      home: RegisterScreen(),
     );
   }
 }

@@ -21,11 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   getData() async {
     isLoading = true;
-    log("===============11111");
     searchData = await ProductCon().makeModel();
     finalData = searchData;
     isLoading = false;
-    log("===============33333");
     setState(() {});
   }
 

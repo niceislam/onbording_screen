@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/login_page.dart';
@@ -59,7 +61,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   duration: Duration(milliseconds: 70),
                 ),
                 SizedBox(height: 20),
-                Column(spacing: 15,
+                Column(
+                  spacing: 15,
                   children: [
                     CustomTextfield(
                       controller: usernamecontroller,
@@ -134,8 +137,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (value) {
                         if (value == "" || value == null) {
                           return "field can't be empty";
-                        }else if(passwordcontroller.text != confirmpasscontroller.text){
-                          return"wrong password";
+                        } else if (passwordcontroller.text !=
+                            confirmpasscontroller.text) {
+                          return "wrong password";
                         }
                       },
                     ),
@@ -146,7 +150,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onTap: () async {
                     if (mykey.currentState!.validate()) {
                       await EasyLoading.show();
-
+                      Map<String, dynamic> registerData = {
+                        "username": usernamecontroller.text,
+                        "email": emailcontroller.text,
+                        "password": passwordcontroller.text,
+                      };
+                      log("=========${registerData}");
                     }
                   },
                   child: Container(
@@ -203,10 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: Text(
                         "Login now",
-                        style: TextStyle(
-                          color: Colors.pink,
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(color: Colors.pink, fontSize: 16),
                       ),
                     ),
                   ],
