@@ -27,18 +27,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
 
-  List<LoginModel> fromjsonData = [];
-  getData() async {
-    fromjsonData = await LoginService.LoginData();
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,25 +128,27 @@ class _LoginPageState extends State<LoginPage> {
                       isLoading = true;
                       setState(() {});
                       await Future.delayed(Duration(seconds: 3));
-                      for (var i in fromjsonData) {
-                        if (emailcontroller.text == i.email &&
-                            passwordcontroller.text == i.password) {
-                          await EasyLoading.showSuccess("Login successfully");
-                          await LocalStorage().writeData(
-                            key: "login",
-                            value: "yes",
-                          );
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (c) => HomeScreen()),
-                          );
-                          break;
-                        } else {
-                          await EasyLoading.showError("Wrong user");
-                        }
-                        isLoading = false;
-                        setState(() {});
+
+                      var status = await LoginDataSend.sendData(
+                        emailcontroller: emailcontroller,
+                        passwordcontroller: passwordcontroller,
+                      );
+
+                      if (status == true) {
+                        await EasyLoading.showSuccess("Login successfully");
+                        await LocalStorage().writeData(
+                          key: "login",
+                          value: "yes",
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (c) => HomeScreen()),
+                        );
+                      } else {
+                        await EasyLoading.showError("something went wrong");
                       }
+                      isLoading = false;
+                      setState(() {});
                     }
                   },
                   child: Container(

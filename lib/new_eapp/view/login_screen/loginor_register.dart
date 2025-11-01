@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/login_page.dart';
 import 'package:new_eapp/new_eapp/view/login_screen/register_screen.dart';
@@ -10,6 +11,7 @@ class LoginorRegister extends StatefulWidget {
 }
 
 class _LoginorRegisterState extends State<LoginorRegister> {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +74,35 @@ class _LoginorRegisterState extends State<LoginorRegister> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: FutureBuilder(
+        future: deviceInfo.androidInfo,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          var info = snapshot.data;
+          if (snapshot.hasData) {
+            return Container(
+              height: 50,
+              width: MediaQuery.sizeOf(context).width,
+              color: Colors.blue,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${info.name}",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    Text(
+                      "${info.id}",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          return CircularProgressIndicator();
+        },
       ),
     );
   }
